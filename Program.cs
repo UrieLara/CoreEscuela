@@ -26,19 +26,6 @@ namespace CoreEscuela
             {
                 WriteLine($"Nombre: {curso.Nombre}, Id: {curso.UniqueId}");
             }
-
-            
-            foreach (var curso in escuela.Cursos)
-            {   
-                foreach (var ev in curso.Evaluaciones)
-                {
-                    if(curso.Nombre == "101"){
-                        Printer.DibujarLinea(20);
-                        WriteLine($"Asignatura: {ev.Asignatura.Nombre}, Nombre: {ev.Nombre}, Alumno: {ev.Alumno.Nombre}, Nota: {ev.Nota}");
-                    }
-                   
-                }
-            }
         }
     }
 }
