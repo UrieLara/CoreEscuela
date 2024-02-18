@@ -26,3 +26,4 @@ D:\Uriel Lara\Documentos\Programacion\Platzi\C sharp\Interm_JuanCarlosRuiz\Etapa
 D:\Uriel Lara\Documentos\Programacion\Platzi\C sharp\Interm_JuanCarlosRuiz\Etapa4\obj\Debug\net8.0\Etapa1.pdb
 D:\Uriel Lara\Documentos\Programacion\Platzi\C sharp\Interm_JuanCarlosRuiz\Etapa4\obj\Debug\net8.0\Etapa1.genruntimeconfig.cache
 D:\Uriel Lara\Documentos\Programacion\Platzi\C sharp\Interm_JuanCarlosRuiz\Etapa4\obj\Debug\net8.0\ref\Etapa1.dll
+D:\Uriel Lara\Documentos\Programacion\Platzi\C sharp\Interm_JuanCarlosRuiz\Etapa4\obj\Debug\net8.0\Etapa1.sourcelink.json
