@@ -1,31 +1,21 @@
 
 using System.Reflection.Metadata.Ecma335;
 using System.Collections.Generic;
+using CoreEscuela.Util;
 
 namespace CoreEscuela.Entidades
 {
-    public class Escuela
+    public class Escuela: ObjetoEscuelaBase, ILugar
     {
-        string nombre;
-
-        //Encapsulamiento
-        /*Sirve para poder usar los atributos de la clase y modificar el código para obtener o pedir 
-        los valores del atributo sin modificarlo directamente*/
-        public string Nombre{
-            get{return nombre;}
-            set{nombre = value.ToUpper();}
-        }
-
-        public string UniqueId = Guid.NewGuid().ToString();
-
-        //Esto es lo mismo pero más cortito
         public int AñoDeCreacion {get;set;}
 
         public string Pais { get; set; }
         public string Ciudad { get; set; }
         public TipoEscuela TipoEscuela {get;set;}
-
         public List<Curso> Cursos {get; set;}
+
+        public string Direccion { get; set; }
+
         public override string ToString()
         {
             return $"Nombre: \"{Nombre}\", Tipo: {TipoEscuela} \n Pais: {Pais}, Ciudad: {Ciudad}";
@@ -53,5 +43,16 @@ namespace CoreEscuela.Entidades
                     Pais = pais;
                     Ciudad = ciudad;
                         } 
+
+        public void LimpiarLugar(){
+
+            Printer.DrawLine();
+            Console.WriteLine("Limpiando Escuela...");
+            foreach(var curso in Cursos){
+                curso.LimpiarLugar();
+            }
+            Console.WriteLine($"Escuela limpia");
+            
+        }
     }
 }

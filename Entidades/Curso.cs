@@ -3,19 +3,23 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using CoreEscuela.Entidades;
+using CoreEscuela.Util;
 
 namespace CoreEscuela.Entidades
 {
-    public class Curso
+    public class Curso: ObjetoEscuelaBase, ILugar
     {
-        public string UniqueId { get; private set; }
-        public string Nombre { get; set; }
         public TiposJornada Jornada { get; set; }
         public List<Asignatura> Asignaturas{get; set;}
         public List<Alumno> Alumnos { get; set; }
-        public List<Evaluaciones> Evaluaciones {get; set;}
-        public Curso()=>
-            UniqueId = Guid.NewGuid().ToString();
-        
+        public List<Evaluacion> Evaluaciones {get; set;}
+        public string Direccion { get; set; }
+
+        public void LimpiarLugar()
+        {
+            Printer.DrawLine();
+            Console.WriteLine("Limpiando Establecimiento...");
+            Console.WriteLine($"Curso {Nombre} limpio");
+        }
     }
 }

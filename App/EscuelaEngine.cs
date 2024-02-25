@@ -43,23 +43,24 @@ namespace CoreEscuela
         {
             foreach (var curso in Escuela.Cursos)
             {
-                var asignaturas = curso.Asignaturas;
-                var alumnos = curso.Alumnos;
-
-                for (int i = 1; i < 6; i++)
+                foreach (var alumno in curso.Alumnos)
                 {
-                    var listaEvaluaciones = from asig in asignaturas
-                                            from al in alumnos
-                                            select new Evaluaciones 
-                                            { Nombre = $"Parcial {i}", Alumno = al, Asignatura = asig, 
-                                            Nota = GenerarNotaRandom() };
-                    
-                    if(curso.Evaluaciones == null){
-                        curso.Evaluaciones = listaEvaluaciones.ToList();
+                    var asignaturas = curso.Asignaturas;
+
+                    for (int i = 1; i < 6; i++)
+                    {
+                        var listaEvaluaciones = from asig in asignaturas
+                                                    //from al in alumnos
+                                                select new Evaluacion
+                                                {
+                                                    Nombre = $"Parcial {i}",
+                                                    Alumno = alumno,
+                                                    Asignatura = asig,
+                                                    Nota = GenerarNotaRandom()
+                                                };
+
+                        alumno.Evaluaciones.AddRange(listaEvaluaciones.ToList());
                     }
-                    else{
-                        curso.Evaluaciones.AddRange(listaEvaluaciones.ToList());
-                    }       
                 }
             }
         }
@@ -67,7 +68,7 @@ namespace CoreEscuela
         private float GenerarNotaRandom()
         {
             Random r = new Random();
-            float nota = (float) Math.Round(r.NextDouble()*5, 1);
+            float nota = (float)Math.Round(r.NextDouble() * 5, 1);
             return nota;
         }
 
@@ -98,6 +99,28 @@ namespace CoreEscuela
 
             return listaAlumnos.OrderBy((al) => al.UniqueId).Take(cantidad).ToList();
         }
+
+
+        public List<ObjetoEscuelaBase> GetObjetosEscuela()
+        {
+            var listaObj = new List<ObjetoEscuelaBase>();
+            listaObj.Add(Escuela);
+            listaObj.AddRange(Escuela.Cursos);
+            
+            foreach (var curso in Escuela.Cursos)
+            {
+                listaObj.AddRange(curso.Asignaturas);
+                listaObj.AddRange(curso.Alumnos);
+
+                foreach (var alumno in curso.Alumnos)
+                {
+                    listaObj.AddRange(curso.Asignaturas);
+                }
+            }
+
+            return listaObj;
+        }
     }
 }
+
 

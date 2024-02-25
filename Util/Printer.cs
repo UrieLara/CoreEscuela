@@ -5,7 +5,7 @@ namespace CoreEscuela.Util {
     public static class Printer{
         //no permite crear nuevas instancias
 
-        public static void DibujarLinea(int tam = 10){
+        public static void DrawLine(int tam = 10){
             
             WriteLine("".PadLeft(tam, '=')); //Pad = rellenar
         }
@@ -14,9 +14,9 @@ namespace CoreEscuela.Util {
         public static void WriteTitle(string titulo){
             
             var tam = titulo.Length+4;
-            DibujarLinea(tam);
+            DrawLine(tam);
             WriteLine($"| {titulo} |");
-            DibujarLinea(tam);
+            DrawLine(tam);
         }
 
         public static void Beep(int hz=2000, int tiempo=500, int cantidad=1){
