@@ -1,3 +1,5 @@
+using CoreEscuela.Entidades;
+using Etapa4.Entidades;
 using static System.Console;
 
 namespace CoreEscuela.Util {

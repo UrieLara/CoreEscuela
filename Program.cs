@@ -9,13 +9,28 @@ namespace CoreEscuela
     {
         static void Main(string[] args)
         {
+            AppDomain.CurrentDomain.ProcessExit += AccionDelEvento; //se ejecuta cada vez que se termina el programa
+
             var engine = new EscuelaEngine();
             engine.Inicializar();
-            
-            Printer.WriteTitle("Bienvenidos a la Escuela");
-            Printer.Beep();
-            ImprimirCursosEscuela(engine.Escuela);
 
+            //Printer.WriteTitle("Bienvenidos a la Escuela");
+            // Printer.Beep();
+            // ImprimirCursosEscuela(engine.Escuela);
+
+            // engine.Escuela.LimpiarLugar();
+
+            var listaObjetos = engine.GetObjetosEscuela();
+
+            //filtrar
+            var listaLugar = from obj in listaObjetos
+                             where obj is ILugar
+                             select (ILugar)obj;
+
+
+
+            var diccionario = engine.GetDiccionarioObjetos();
+            engine.ImprimirDiccionario(diccionario);
         }
 
         private static void ImprimirCursosEscuela(Escuela escuela)
@@ -27,6 +42,14 @@ namespace CoreEscuela
                 WriteLine($"Nombre: {curso.Nombre}, Id: {curso.UniqueId}");
             }
         }
+
+        private static void AccionDelEvento(object? sender, EventArgs e)
+        {
+            Printer.WriteTitle("Saliendo");
+            Printer.Beep(3000, 1000, 2);
+            Printer.WriteTitle("Chao!");
+        }
+
     }
 }
 

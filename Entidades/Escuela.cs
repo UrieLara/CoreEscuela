@@ -2,6 +2,7 @@
 using System.Reflection.Metadata.Ecma335;
 using System.Collections.Generic;
 using CoreEscuela.Util;
+using Microsoft.Win32.SafeHandles;
 
 namespace CoreEscuela.Entidades
 {
@@ -48,10 +49,11 @@ namespace CoreEscuela.Entidades
 
             Printer.DrawLine();
             Console.WriteLine("Limpiando Escuela...");
+            Printer.Beep(hz: 5000);
             foreach(var curso in Cursos){
                 curso.LimpiarLugar();
             }
-            Console.WriteLine($"Escuela limpia");
+            Console.WriteLine($"Escuela {Nombre} limpia");
             
         }
     }
