@@ -3,9 +3,8 @@ using System.Reflection.Metadata.Ecma335;
 using CoreEscuela.Entidades;
 using System.Linq;
 using CoreEscuela.Util;
-using Etapa4.Entidades;
 
-namespace CoreEscuela
+namespace CoreEscuela.App
 {
 
     public class EscuelaEngine
@@ -203,7 +202,7 @@ namespace CoreEscuela
 
             var diccionario = new Dictionary<LlaveDiccionario, IEnumerable<ObjetoEscuelaBase>>();
 
-            diccionario.Add(LlaveDiccionario.Escuela, new[] { Escuela });
+            diccionario.Add(LlaveDiccionario.Escuela, new[] {Escuela});
             diccionario.Add(LlaveDiccionario.Curso, Escuela.Cursos.Cast<ObjetoEscuelaBase>());
 
             var listatempAsig = new List<Asignatura>();
@@ -230,8 +229,8 @@ namespace CoreEscuela
 
         public void ImprimirDiccionario(Dictionary<LlaveDiccionario, IEnumerable<ObjetoEscuelaBase>> dic)
         {
-            bool ImprimirCur = false,
-                ImprimirAl = true,
+            bool ImprimirCur = true,
+                ImprimirAl = false,
                 ImprimirAsig = false,
                 ImprimirEv = false;
 
@@ -243,7 +242,7 @@ namespace CoreEscuela
                 {
                     continue;
                 }
-
+                
                 if (obj.Key == LlaveDiccionario.Alumno && !ImprimirAl)
                 {
                     continue;
@@ -265,6 +264,10 @@ namespace CoreEscuela
                 foreach (var item in obj.Value)
                 {
                     Console.WriteLine(item);
+
+                    if(ImprimirCur){
+                        Console.WriteLine($"{item}"); 
+                    }
                 }
             }
 

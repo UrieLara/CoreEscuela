@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Etapa4.Entidades
+namespace CoreEscuela.Entidades
 {
     
     public enum LlaveDiccionario{
