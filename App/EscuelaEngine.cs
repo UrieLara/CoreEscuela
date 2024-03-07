@@ -202,7 +202,7 @@ namespace CoreEscuela.App
 
             var diccionario = new Dictionary<LlaveDiccionario, IEnumerable<ObjetoEscuelaBase>>();
 
-            diccionario.Add(LlaveDiccionario.Escuela, new[] {Escuela});
+            diccionario.Add(LlaveDiccionario.Escuela, new[] { Escuela });
             diccionario.Add(LlaveDiccionario.Curso, Escuela.Cursos.Cast<ObjetoEscuelaBase>());
 
             var listatempAsig = new List<Asignatura>();
@@ -236,13 +236,11 @@ namespace CoreEscuela.App
 
             foreach (var obj in dic)
             {
-
-
                 if (obj.Key == LlaveDiccionario.Curso && !ImprimirCur)
                 {
                     continue;
                 }
-                
+
                 if (obj.Key == LlaveDiccionario.Alumno && !ImprimirAl)
                 {
                     continue;
@@ -264,9 +262,16 @@ namespace CoreEscuela.App
                 foreach (var item in obj.Value)
                 {
                     Console.WriteLine(item);
+                    if (obj.Key == LlaveDiccionario.Curso)
+                    {
+                        var cursotmp = item as Curso;
 
-                    if(ImprimirCur){
-                        Console.WriteLine($"{item}"); 
+                        if (cursotmp != null)
+                        {
+                            int cantidadAlumnos = cursotmp.Alumnos.Count;
+                            Console.WriteLine($"\t\t\t\tNo. Alumnos: {cantidadAlumnos}");
+                        }
+
                     }
                 }
             }

@@ -32,7 +32,7 @@ namespace CoreEscuela.App
         public IEnumerable<string> GetListaAsignaturas()
         {
 
-             return  GetListaAsignaturas(out var dummy);
+            return GetListaAsignaturas(out var dummy);
         }
 
         public IEnumerable<string> GetListaAsignaturas(out IEnumerable<Evaluacion> listaEvaluaciones)
@@ -43,7 +43,7 @@ namespace CoreEscuela.App
                     select ev.Asignatura.Nombre).Distinct();
         }
 
-        public Dictionary<string, IEnumerable<Evaluacion>> GetListaEvXAsig()
+        public Dictionary<string, IEnumerable<Evaluacion>> GetDicEvXAsig()
         {
             var dicRta = new Dictionary<string, IEnumerable<Evaluacion>>();
 
@@ -54,11 +54,38 @@ namespace CoreEscuela.App
                 var evalsAsig = from eval in listaEvaluaciones
                                 where eval.Asignatura.Nombre == asig
                                 select eval;
-                
-                dicRta.Add(asig,evalsAsig);
+
+                dicRta.Add(asig, evalsAsig);
             }
 
             return dicRta;
+        }
+
+        public Dictionary<string, IEnumerable<Object>> GetPromeAlumXAsig()
+        {
+            var respuesta = new Dictionary<string, IEnumerable<Object>>();
+            var dicEvalXAsig = GetDicEvXAsig();
+
+            foreach (var asigConEval in dicEvalXAsig)
+            {
+                var promedioAlumnos = 
+                            from eval in asigConEval.Value
+                            group eval by new {
+                                eval.Alumno.UniqueId,
+                                eval.Alumno.Nombre
+                                }
+
+                            into grupoEvalsAlumno
+                            select new AlumnoPromedio
+                            {
+                                alumnoId = grupoEvalsAlumno.Key.UniqueId,
+                                alumnoNombre = grupoEvalsAlumno.Key.Nombre,
+                                promedio = grupoEvalsAlumno.Average(evaluacion => evaluacion.Nota)
+                            };
+                respuesta.Add(asigConEval.Key, promedioAlumnos);
+            }
+
+            return respuesta;
         }
     }
 }

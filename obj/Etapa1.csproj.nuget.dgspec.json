@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\Uriel Lara\\Documentos\\Programacion\\Platzi\\C sharp\\Interm_JuanCarlosRuiz\\Etapa4\\Etapa1.csproj": {}
+    "d:\\Uriel Lara\\Documentos\\Programacion\\Platzi\\C sharp\\Interm_JuanCarlosRuiz\\Etapa4\\Etapa1.csproj": {}
   },
   "projects": {
-    "D:\\Uriel Lara\\Documentos\\Programacion\\Platzi\\C sharp\\Interm_JuanCarlosRuiz\\Etapa4\\Etapa1.csproj": {
+    "d:\\Uriel Lara\\Documentos\\Programacion\\Platzi\\C sharp\\Interm_JuanCarlosRuiz\\Etapa4\\Etapa1.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Uriel Lara\\Documentos\\Programacion\\Platzi\\C sharp\\Interm_JuanCarlosRuiz\\Etapa4\\Etapa1.csproj",
+        "projectUniqueName": "d:\\Uriel Lara\\Documentos\\Programacion\\Platzi\\C sharp\\Interm_JuanCarlosRuiz\\Etapa4\\Etapa1.csproj",
         "projectName": "Etapa1",
-        "projectPath": "D:\\Uriel Lara\\Documentos\\Programacion\\Platzi\\C sharp\\Interm_JuanCarlosRuiz\\Etapa4\\Etapa1.csproj",
+        "projectPath": "d:\\Uriel Lara\\Documentos\\Programacion\\Platzi\\C sharp\\Interm_JuanCarlosRuiz\\Etapa4\\Etapa1.csproj",
         "packagesPath": "C:\\Users\\Uriel Lara\\.nuget\\packages\\",
-        "outputPath": "D:\\Uriel Lara\\Documentos\\Programacion\\Platzi\\C sharp\\Interm_JuanCarlosRuiz\\Etapa4\\obj\\",
+        "outputPath": "d:\\Uriel Lara\\Documentos\\Programacion\\Platzi\\C sharp\\Interm_JuanCarlosRuiz\\Etapa4\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Uriel Lara\\AppData\\Roaming\\NuGet\\NuGet.Config",

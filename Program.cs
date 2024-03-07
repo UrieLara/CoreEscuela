@@ -38,6 +38,7 @@ namespace CoreEscuela
             var diccionario = engine.GetDiccionarioObjetos();
             engine.ImprimirDiccionario(diccionario);
             
+            var listaPromXAsig = reporteador.GetPromeAlumXAsig();
         }
 
         private static void ImprimirCursosEscuela(Escuela escuela)
