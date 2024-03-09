@@ -5,6 +5,11 @@ using System.Linq;
 using System.Threading.Tasks;
 using CoreEscuela.Entidades;
 using System.Data;
+using System.Diagnostics;
+using System.ComponentModel.Design;
+using System.Reflection.Metadata;
+using System.Security.Cryptography;
+using CoreEscuela.Util;
 
 namespace CoreEscuela.App
 {
@@ -61,31 +66,70 @@ namespace CoreEscuela.App
             return dicRta;
         }
 
-        public Dictionary<string, IEnumerable<Object>> GetPromeAlumXAsig()
+        public Dictionary<string, IEnumerable<AlumnoPromedio>> GetPromeAlumXAsig()
         {
-            var respuesta = new Dictionary<string, IEnumerable<Object>>();
+            var respuesta = new Dictionary<string, IEnumerable<AlumnoPromedio>>();
             var dicEvalXAsig = GetDicEvXAsig();
 
             foreach (var asigConEval in dicEvalXAsig)
             {
-                var promedioAlumnos = 
+                var promedioAlumnos =
                             from eval in asigConEval.Value
-                            group eval by new {
+                            group eval by new
+                            {
                                 eval.Alumno.UniqueId,
                                 eval.Alumno.Nombre
-                                }
+                            }
 
                             into grupoEvalsAlumno
                             select new AlumnoPromedio
                             {
                                 alumnoId = grupoEvalsAlumno.Key.UniqueId,
                                 alumnoNombre = grupoEvalsAlumno.Key.Nombre,
-                                promedio = grupoEvalsAlumno.Average(evaluacion => evaluacion.Nota)
+                                promedio = (float)Math.Round(grupoEvalsAlumno.Average(evaluacion => evaluacion.Nota),2)
+                                
                             };
                 respuesta.Add(asigConEval.Key, promedioAlumnos);
             }
 
             return respuesta;
         }
+
+        public Dictionary<string, IEnumerable<AlumnoPromedio>> MejoresPromedios(int top)
+        {
+
+            var respuesta = new Dictionary<string, IEnumerable<AlumnoPromedio>>();
+            var promediosGenerales = GetPromeAlumXAsig();
+
+            foreach (var asignatura in promediosGenerales)
+            {
+                var topProm =
+                        (from asig in asignatura.Value
+                         orderby asig.promedio descending
+                         select asig).Take(top);
+
+                respuesta.Add(asignatura.Key, topProm);
+            }
+
+            return respuesta;
+
+        }
+
+        public void ImprimirMejoresPromedios(Dictionary<string, IEnumerable<AlumnoPromedio>> dic)
+        {
+
+            foreach (var obj in dic)
+            {
+                Printer.WriteTitle($"{obj.Key.ToString()}");
+
+                foreach (var item in obj.Value)
+                {
+                    Console.WriteLine($"Id: {item.alumnoId}\n Nombre: {item.alumnoNombre}, Promedio: {item.promedio}\n");
+                }
+            }
+
+        }
     }
+
+
 }

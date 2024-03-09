@@ -35,10 +35,13 @@ namespace CoreEscuela
 
 
 
-            var diccionario = engine.GetDiccionarioObjetos();
-            engine.ImprimirDiccionario(diccionario);
+            //var diccionario = engine.GetDiccionarioObjetos();
+            //engine.ImprimirDiccionario(diccionario);
             
             var listaPromXAsig = reporteador.GetPromeAlumXAsig();
+            var alumnosMejoresPromedios = reporteador.MejoresPromedios(2);
+            reporteador.ImprimirMejoresPromedios(alumnosMejoresPromedios);
+            
         }
 
         private static void ImprimirCursosEscuela(Escuela escuela)
