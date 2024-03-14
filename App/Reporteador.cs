@@ -9,6 +9,7 @@ using System.Diagnostics;
 using System.ComponentModel.Design;
 using System.Reflection.Metadata;
 using System.Security.Cryptography;
+using static System.Console;
 using CoreEscuela.Util;
 
 namespace CoreEscuela.App
@@ -32,6 +33,22 @@ namespace CoreEscuela.App
                                             out IEnumerable<ObjetoEscuelaBase> lista))
             { return lista.Cast<Evaluacion>(); }
             { return new List<Evaluacion>(); }
+        }
+
+        public void ImprimirListaEvaluaciones(int cant = 5)
+        {
+            var lista = GetListaEvaluaciones();
+            int contador = 0;
+            foreach (var obj in lista)
+            {
+                Printer.WriteTitle($"Alumno: {obj.Alumno}, Nota: {obj.Nota}");
+                contador++;
+
+                if (contador == cant)
+                {
+                    return;
+                }
+            }
         }
 
         public IEnumerable<string> GetListaAsignaturas()
@@ -86,14 +103,15 @@ namespace CoreEscuela.App
                             {
                                 alumnoId = grupoEvalsAlumno.Key.UniqueId,
                                 alumnoNombre = grupoEvalsAlumno.Key.Nombre,
-                                promedio = (float)Math.Round(grupoEvalsAlumno.Average(evaluacion => evaluacion.Nota),2)
-                                
+                                promedio = (float)Math.Round(grupoEvalsAlumno.Average(evaluacion => evaluacion.Nota), 2)
+
                             };
                 respuesta.Add(asigConEval.Key, promedioAlumnos);
             }
 
             return respuesta;
         }
+
 
         public Dictionary<string, IEnumerable<AlumnoPromedio>> MejoresPromedios(int top)
         {
@@ -115,7 +133,35 @@ namespace CoreEscuela.App
 
         }
 
-        public void ImprimirMejoresPromedios(Dictionary<string, IEnumerable<AlumnoPromedio>> dic)
+        public void ImprimirPromedios(Dictionary<string, IEnumerable<AlumnoPromedio>> dic, int cant = 2)
+        {
+            int contador = 0;
+            
+            foreach (var obj in dic)
+            {   
+                Printer.WriteTitle($"{obj.Key.ToString()}");
+
+                foreach (var item in obj.Value)
+                {
+                    Console.WriteLine($"Id: {item.alumnoId}\n Nombre: {item.alumnoNombre}, Promedio: {item.promedio}\n");
+                    
+                    contador++;
+
+                    if (contador == cant)
+                    {
+                        contador = 0;
+                        goto Siguiente;
+                    }
+                    
+                }
+                
+                Siguiente: continue;
+
+            }
+
+        }
+
+        public void ImprimirPromedios(Dictionary<string, IEnumerable<AlumnoPromedio>> dic)
         {
 
             foreach (var obj in dic)
@@ -129,6 +175,72 @@ namespace CoreEscuela.App
             }
 
         }
+
+        public void PrimerConsola()
+        {
+            Printer.WriteTitle("Captura de una Evaluación por Consola");
+            var newEval = new Evaluacion();
+            string nombre, notastring;
+
+            WriteLine("Ingrese el nombre de la Evaluacion,");
+            Printer.PresioneENTER();
+            nombre = Console.ReadLine();
+
+            if (string.IsNullOrWhiteSpace(nombre))
+            {
+                WriteLine("El valor del nombre no debe estar vacío");
+                WriteLine("Saliendo...");
+            }
+            else
+            {
+                newEval.Nombre = nombre.ToLower();
+                WriteLine("Nombre guardado correctamente\n");
+            }
+
+
+            WriteLine("Ingrese la nota de la Evaluacion,");
+            Printer.PresioneENTER();
+            notastring = Console.ReadLine();
+
+            if (string.IsNullOrWhiteSpace(notastring))
+            {
+                WriteLine("El valor de la nota no debe estar vacío");
+                WriteLine("Saliendo...");
+            }
+            else
+            {
+                try
+                {
+                    newEval.Nota = float.Parse(notastring);
+
+                    if (newEval.Nota < 0 || newEval.Nota > 5)
+                    {
+                        throw new ArgumentOutOfRangeException("La nota debe estar entre 0 y 5");
+                    }
+
+                    WriteLine("Nota guardada correctamente");
+                }
+                catch (ArgumentOutOfRangeException arge)
+                {
+                    WriteLine(arge.Message);
+                    WriteLine("Saliendo...");
+
+                }
+                catch (Exception)
+                {
+                    WriteLine("El valor de la nota no es un número válido");
+                    WriteLine("Saliendo...");
+                }
+                finally
+                {
+                    Printer.WriteTitle("Finally");
+                }
+
+            }
+        }
+
+
+
     }
 
 

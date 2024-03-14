@@ -29,14 +29,14 @@ namespace CoreEscuela.Util
 
             while (cantidad-- > 0)
             {
-                Console.Beep(hz, tiempo);
+                Beep(hz, tiempo);
 
             }
         }
 
         public static void PresioneENTER()
         {
-            Console.WriteLine("Presione ENTER para continuar.");
+            WriteLine("Presione ENTER para continuar.");
 
         }
     }

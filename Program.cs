@@ -15,95 +15,62 @@ namespace CoreEscuela
             var engine = new EscuelaEngine();
 
             engine.Inicializar();
+
             var reporteador = new Reporteador(engine.GetDiccionarioObjetos());
-            var evaluacionesLista = reporteador.GetListaEvaluaciones();
 
-            //Printer.WriteTitle("Bienvenidos a la Escuela");
-            // Printer.Beep();
-            // ImprimirCursosEscuela(engine.Escuela);
-
-            // engine.Escuela.LimpiarLugar();
-
-            var listaObjetos = engine.GetObjetosEscuela();
-
-            //filtrar
-            var listaLugar = from obj in listaObjetos
-                             where obj is ILugar
-                             select (ILugar)obj;
-
-
-
-            //var diccionario = engine.GetDiccionarioObjetos();
-            //engine.ImprimirDiccionario(diccionario);
-
-            var listaPromXAsig = reporteador.GetPromeAlumXAsig();
-            var alumnosMejoresPromedios = reporteador.MejoresPromedios(2);
-            //reporteador.ImprimirMejoresPromedios(alumnosMejoresPromedios);
 
             #region Interfaz
+            Printer.WriteTitle("Bienvenidos a la Escuela");
+            // Printer.Beep();
+            ImprimirCursosEscuela(engine.Escuela);
 
-            Printer.WriteTitle("Captura de una Evaluación por Consola");
-            var newEval = new Evaluacion();
-            string nombre, notastring;
-
-            WriteLine("Ingrese el nombre de la Evaluacion,");
+            Printer.WriteTitle("MENÚ");
+            WriteLine("Escriba el número del reporte que desea imprimir");
+            WriteLine("1: Lista de Evaluaciones \n2: Lista de Promedios de Alumnos por Asignatura\n 3: Lista de mejores promedios");
             Printer.PresioneENTER();
-            nombre = Console.ReadLine();
 
-            if (string.IsNullOrWhiteSpace(nombre))
+            string opcion = ReadLine();
+            string aux;
+
+            switch (int.Parse(opcion))
             {
-                WriteLine("El valor del nombre no debe estar vacío");
-                WriteLine("Saliendo...");
+                case 1:
+                    WriteLine("\nEscribe el número de evaluaciones que quieres ver");
+                    aux = ReadLine();
+                    reporteador.ImprimirListaEvaluaciones(int.Parse(aux));
+                    
+                    break;
+                case 2:
+                WriteLine("\nEscribe el número de promedios que quieres ver");
+                    aux = ReadLine();
+                    reporteador.ImprimirPromedios(reporteador.GetPromeAlumXAsig(), int.Parse(aux));
+                    break;
+                case 3:
+                WriteLine("\nEscribe la cantidad de promedios que quieres ver");
+                    aux = ReadLine();
+                    reporteador.ImprimirPromedios(reporteador.MejoresPromedios(int.Parse(aux)));
+                    break;
+                default:
+                    WriteLine("opción no válida");
+                    break;
             }
-            else
-            {
-                newEval.Nombre = nombre.ToLower();
-                WriteLine("Nombre guardado correctamente\n");
-            }
 
 
-            WriteLine("Ingrese la nota de la Evaluacion,");
-            Printer.PresioneENTER();
-            notastring = Console.ReadLine();
+            /*var diccionario = engine.GetDiccionarioObjetos();
+                        engine.ImprimirDiccionario(diccionario);*/
 
-            if (string.IsNullOrWhiteSpace(notastring))
-            {
-                WriteLine("El valor de la nota no debe estar vacío");
-                WriteLine("Saliendo...");
-            }
-            else
-            {
-                try
-                {
-                    newEval.Nota = float.Parse(notastring);
 
-                    if (newEval.Nota < 0 || newEval.Nota > 5)
-                    {
-                        throw new ArgumentOutOfRangeException("La nota debe estar entre 0 y 5");
-                    }
-
-                    WriteLine("Nota guardada correctamente");
-                }
-                catch (ArgumentOutOfRangeException arge){
-                    WriteLine(arge.Message);
-                    WriteLine("Saliendo...");
-
-                }
-                catch(Exception)
-                {
-                    WriteLine("El valor de la nota no es un número válido");
-                    WriteLine("Saliendo...");
-                }
-                finally{
-                    Printer.WriteTitle("Finally");
-                }
-
-            }
 
             #endregion
 
-        }
+            // engine.Escuela.LimpiarLugar();
 
+            /*filtrar
+            var listaObjetos = engine.GetObjetosEscuela();
+            var listaLugar = from obj in listaObjetos
+                             where obj is ILugar
+                             select (ILugar)obj;*/
+        }
 
         private static void ImprimirCursosEscuela(Escuela escuela)
         {
